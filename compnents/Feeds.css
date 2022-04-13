@@ -1,0 +1,23 @@
+.navbar{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFFFFF;
+}
+
+.icons{
+    margin: 0.5rem;
+    color: black;
+}
+.icons-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media only screen and (max-width:500px) {
+    
+    .icons{
+        display: none;
+    }
+}
