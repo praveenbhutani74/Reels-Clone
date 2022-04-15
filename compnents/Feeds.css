@@ -3,6 +3,8 @@
     justify-content: center;
     align-items: center;
     background-color: #FFFFFF;
+    /* position: sticky;
+    top: 10%; */
 }
 
 .icons{
@@ -13,6 +15,80 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
+}
+.Feed{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+/* .Upload-Button{
+width: 44rem;
+} */
+
+.Upload-Button{
+    width: 13rem;
+    height: 10vh;
+}
+.video-feed{
+    height: 80vh;
+   
+    border-radius: 5%;
+    overflow-y: scroll;
+    scrollbar-width: 0;
+    
+}
+.video-feed::-webkit-scrollbar{
+    display: none;
+}
+.post{
+    height: 80vh;
+    width: 19rem;
+    margin-bottom: 0.5rem;
+    /* border: 1px solid black; */
+    border-radius: 5%;
+    position: relative;
+}
+.post > video{
+    height: 80vh;
+    width: 100%;
+
+    object-fit: contain;
+    background-color: aqua;
+    border-radius: 5%;
+}
+.videoFeed-information{
+position: absolute;
+bottom: 15%;
+display: flex;
+flex-direction: row;
+justify-content: space-around;
+width: 100%;
+}
+.Avatar-Name{
+
+    display: flex;
+    justify-content: flex-start;
+    /* align-items: center; */
+    width: 70%;
+    flex-direction: column;
+}
+.like-info{
+    
+    height: 4rem;
+    display: flex;
+  
+    width: 20%;
+    justify-content: space-between;
+    flex-direction: column;
+    margin-top: -30px;
+}
+@media only screen and (max-width:400px) {
+    
+    .Avatar-Name    {
+        padding-left: 1rem;
+    }
 }
 
 @media only screen and (max-width:500px) {
