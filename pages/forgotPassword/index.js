@@ -12,23 +12,23 @@ import image3 from '../../assests/image3.png';
 import image4 from '../../assests/image4.png';
 import { AuthContext } from '../../context/auth';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import Link from 'next/link'
 
 function index() {
     const router=useRouter();
     const [email,setEmail]=useState('');
-    const [password,setPassword]=useState('');
+   
     const [error,setError]=useState('');
     const [loading,setLoading]=useState(false);
 
-    const{login,user}=useContext(AuthContext);
+    const{forgot,user}=useContext(AuthContext);
     console.log(user);
     
-    const LoginClickBtn=async()=>{
+    const ForgotPasswordClickBtn=async()=>{
         try{
             setLoading(true);
             setError('');
-            await login(email,password);
+            await forgot(email);
 
         }catch(err){
             setError(err.message);
@@ -46,8 +46,8 @@ function index() {
     },[user]);
 
     return (
-        <div className="login-main">
-            <div className='Login-carousel'>
+        <div className="ForgotPassword-main">
+            <div className='ForgotPassword-carousel'>
                 <div className='corousel-images'>
                     <Carousel showThumbs={false}
                         infiniteLoop={true}
@@ -71,13 +71,13 @@ function index() {
 
                 </div>
             </div>
-            <div className='login' >
-                <div className="login-upper">
+            <div className='ForgotPassword' >
+                <div className="ForgotPassword-upper">
 
                     <Image src={insta} style={{ marginTop: "1rem" }} />
 
                     <TextField size='small' margin='dense' id="outlined-basic" label="Email" variant="outlined" fullWidth  value={email} onChange={(e)=>setEmail(e.target.value)} />
-                    <TextField size='small' id="outlined-basic" label="Password" type="password" variant="outlined" fullWidth margin='dense'  value={password} onChange={(e)=>setPassword(e.target.value)} style={{ marginTop: "1rem" }}  />
+                    {/* <TextField size='small' id="outlined-basic" label="Password" type="password" variant="outlined" fullWidth margin='dense'  value={password} onChange={(e)=>setPassword(e.target.value)} style={{ marginTop: "1rem" }}  /> */}
 
                     {
                         error!=''&&
@@ -87,20 +87,20 @@ function index() {
                     }
 
                     <Button variant="contained" fullWidth color="primary" component="span" style={{ marginTop: "1rem" }}
-                    onClick={LoginClickBtn} disabled={loading}
+                    onClick={ForgotPasswordClickBtn} disabled={loading}
                     >
 
-                        Log In
+                      Send Email
                     </Button>
-                    <Link href="/forgotPassword"><Typography style={{ color: "blue", marginTop: "1rem",cursor:'pointer' }}>
+                    {/* <Typography style={{ color: "blue", marginTop: "1rem" }}>
                         Forgot password?
-                    </Typography></Link>
+                    </Typography> */}
 
                 </div>
 
 
-                <div className="login-bottom">
-                    Dont Have an account?<Link href="/signup"><span style={{ color: 'blue',cursor:'pointer' }} > Sign up</span></Link>
+                <div className="ForgotPassword-bottom">
+                    Dont Have an account?<Link href="/login"><span style={{ color: 'blue',cursor:'pointer' }} > Log In</span></Link>
                 </div>
             </div>
         </div>
@@ -108,4 +108,4 @@ function index() {
 
     )
 }
-export default index;
+export default index;   
