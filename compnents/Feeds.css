@@ -3,8 +3,9 @@
     justify-content: center;
     align-items: center;
     background-color: #FFFFFF;
-    /* position: sticky;
-    top: 10%; */
+    position: sticky;
+    top: 10%;
+
 }
 
 .icons{

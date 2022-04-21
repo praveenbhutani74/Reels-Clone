@@ -50,7 +50,8 @@ const ResponsiveAppBar = () => {
   }
 
   return (
-    <AppBar position="static" className='navbar'>
+    <AppBar position="static" className='navbar' style={{backgroundColor:"white"}}>
+      
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Typography
