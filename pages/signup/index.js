@@ -9,7 +9,8 @@ import Link from 'next/link';
 import { AuthContext } from '../../context/auth';
 import { useRouter } from 'next/router';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { storage } from '../../firebase';
+import { db, storage } from '../../firebase';
+import { doc, setDoc } from 'firebase/firestore';
 // import { async } from '@firebase/util';
 
 function index() {
@@ -60,6 +61,15 @@ function index() {
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             console.log('File available at', downloadURL);
+            let obj={
+              name:name,
+              email:email,
+              uid:user.user.uid,
+              photoUrl:downloadURL
+            }
+            setDoc(doc(db,"users",user.user.uid),obj);
+
+
           });
         }
       );

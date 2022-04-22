@@ -22,7 +22,8 @@ import{Router,useRouter} from 'next/router';
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile',  'Logout'];
 
-const ResponsiveAppBar = () => {
+const ResponsiveAppBar = ({Data}) => {
+  console.log(Data);
 
   const{logout} =React.useContext(AuthContext);
   const router=useRouter();
@@ -91,7 +92,7 @@ const ResponsiveAppBar = () => {
 
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg"  sx={{margin:'0.5rem'}}/>
+                <Avatar alt="Remy Sharp" src={Data.photoUrl}  sx={{margin:'0.5rem'}}/>
               </IconButton>
             </Tooltip>
             <Menu

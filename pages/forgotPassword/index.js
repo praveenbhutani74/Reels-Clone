@@ -53,7 +53,7 @@ function index() {
                         infiniteLoop={true}
                         interval={2000}
                         autoPlay={true}
-                        showThumbs={false}
+                        // showThumbs={false}
                         showStatus={false}
                         showIndicators={false}
 

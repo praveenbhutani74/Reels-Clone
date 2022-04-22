@@ -11,9 +11,11 @@ function AuthWrap({children}) {
 
     useEffect(()=>{
         onAuthStateChanged(auth,(user)=>{
-            
+            if(!user){
+                setUser('');
+            }else{
                 setUser(user);
-            
+            }
         })
         setLoading(false);
     },[])

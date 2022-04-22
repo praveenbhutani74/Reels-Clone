@@ -1,16 +1,35 @@
 
-import React from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Navbar from './Navbar'
 import VideoFeed from './VideoFeed'
 import { Avatar } from '@material-ui/core'
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import CommentIcon from '@material-ui/icons/Comment';
+import { AuthContext } from '../context/auth';
+import { doc, onSnapshot } from 'firebase/firestore';
+import { db } from '../firebase';
 const Feeds = () => {
+
+  const {user}=useContext(AuthContext);
+  const [Data,setData]=useState({});
+  useEffect(()=>{
+    const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
+      console.log("Current data: ", doc.data());
+      setData(doc.data());
+  });
+
+  return ()=>{
+    unsub();
+  }
+
+  },[user])    
+
+
   return (
     <>
       <div className='Feed'>
-        <Navbar />
-        <VideoFeed />
+        <Navbar Data={Data}  />
+        <VideoFeed Data={Data} />
         <div className='video-feed'>
           {/* <div className='post'>
             <video />
