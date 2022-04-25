@@ -3,15 +3,21 @@ import Button from '@material-ui/core/Button';
 import MovieIcon from '@material-ui/icons/Movie';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Alert from '@mui/material/Alert';
+import {v4 as uuidv4} from 'uuid';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { arrayUnion, doc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
+
+import { db, storage } from '../firebase';
 
 function VideoFeed({ Data }) {
+    console.log(Data);
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [progress, setProgress] = useState(0);
 
-    const UploadOnCickBtn=(e)=>{
-        const file=e.target.files[0];
+    const UploadOnCickBtn = async (e)=>{
+        const file= e.target.files[0];
         if(file==null){
             setError("Please Select a file");
             setTimeout(()=>{
@@ -19,9 +25,67 @@ function VideoFeed({ Data }) {
             },2000)
             return;
         }
-        if((file.size)/(1024*1024))<40){
-            
+        if((file.size/(1024*1024))>200){
+            setError("Size exceeds!! Size more than 40Mb");
+            setTimeout(()=>{
+                setError('');
+            },2000)
+            return;
+
         }
+        let uid=uuidv4();
+        setLoading(true);
+        const storageRef = ref(storage, `posts/${uid}`);
+
+        const uploadTask = uploadBytesResumable(storageRef, file);
+  
+        // Register three observers:
+        // 1. 'state_changed' observer, called any time the state changes
+        // 2. Error observer, called on failure
+        // 3. Completion observer, called on successful completion
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setProgress(progress);
+            console.log('Upload is ' + progress + '% done');
+  
+          },
+          (error) => {
+            setError(error.message);
+            setTimeout(()=>{
+                setError('');
+            },2000)
+            return;
+          },
+          () => {
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+              console.log('File available at', downloadURL);
+              let obj={
+               likes:[],
+               postId:uid,
+               postURL:downloadURL,
+               postName:Data.name,
+               profileURL:Data.photoUrl,
+               uid:Data.uid,
+               timestamp:serverTimestamp()
+              }
+            //   console.log(obj);
+              setDoc(doc(db,"posts",uid),obj);
+            
+               updateDoc(doc(db,"users",Data.uid),{
+                    posts:arrayUnion(uid)
+              })
+
+              setLoading(false);
+              setProgress(0);
+  
+            });
+          }
+        );
 
 
 
@@ -40,7 +104,7 @@ function VideoFeed({ Data }) {
 
 
             {
-                loading && <LinearProgress variant="determinate" value={20} style={{ marginTop: '0.5rem' }} />
+                loading && <LinearProgress variant="determinate" value={progress} style={{ marginTop: '0.5rem' }} />
             }
 
         </div>

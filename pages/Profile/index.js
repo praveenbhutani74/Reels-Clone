@@ -1,26 +1,27 @@
 import React, { useContext } from 'react'
 import ProfileComp from '../../compnents/ProfileComp';
-import { useRouter } from 'next/router';
 import { AuthContext } from '../../context/auth';
+import { useRouter } from 'next/router';
+import Navbar from '../../compnents/Navbar';
 
 function index() {
-  const {user}=useContext(AuthContext);
 
-
-const Redirect=()=>{
-  const router=useRouter();
-  router.push("/login");
-  return null;
-}
-
-
+    const {user}=  useContext(AuthContext);
+    console.log(user);
+    function Redirect() {
+        const router = useRouter();
+        router.push("/login");
+        return null
+      }
+    
   return (
-    <>
-    {
-    user?.uid?<ProfileComp/>:<Redirect/>
-}
-    </>
+    <div>
+
+        <ProfileComp/>
+
+
+    </div>
   )
 }
 
-export default index;
+export default index

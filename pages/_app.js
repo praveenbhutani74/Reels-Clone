@@ -5,6 +5,7 @@ import '../compnents/Feeds.css'
 import './forgotPassword/forgotPassword.css'
 import '../compnents/ProfileComp.css'
 
+
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import AuthWrap from '../context/auth';
 function MyApp({ Component, pageProps }) {

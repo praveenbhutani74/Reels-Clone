@@ -17,13 +17,14 @@ import HomeIcon from '@mui/icons-material/Home';
 import ExploreIcon from '@mui/icons-material/Explore';
 import { AuthContext } from '../context/auth';
 import{Router,useRouter} from 'next/router';
+import { Link } from '@mui/material';
 
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile',  'Logout'];
 
 const ResponsiveAppBar = ({Data}) => {
-  console.log(Data);
+  console.log(Data);  
 
   const{logout} =React.useContext(AuthContext);
   const router=useRouter();
@@ -61,7 +62,7 @@ const ResponsiveAppBar = ({Data}) => {
             component="div"
             sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
           >
-            <Image src={instaImage} height={42} width={130}/>
+            <Link href='/'><Image src={instaImage} height={42} width={130}/></Link>
           </Typography>
 
          
@@ -86,13 +87,17 @@ const ResponsiveAppBar = ({Data}) => {
           </Box>
 
           <Box sx={{ flexGrow: 0 }} className='icons-box'>
+            <Link href='/'>
+           
               <HomeIcon fontSize='large' className='icons'/>
+              </Link>
+              <Link href='/'>
               <ExploreIcon fontSize='large'  className='icons'/>
-
+              </Link>
 
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src={Data.photoUrl}  sx={{margin:'0.5rem'}}/>
+                <Avatar alt="Remy Sharp" src={Data?.photoUrl}  sx={{margin:'0.5rem'}}/>
               </IconButton>
             </Tooltip>
             <Menu
@@ -112,7 +117,9 @@ const ResponsiveAppBar = ({Data}) => {
               onClose={handleCloseUserMenu}
             >
              <MenuItem onClick={handleCloseUserMenu}>
+               <Link href='/profile' style={{ textDecoration: 'none',color:"black"}}>
                   <Typography textAlign="center">Profile</Typography>
+                  </Link>
                 </MenuItem>
                 <MenuItem onClick={()=>{
                    handleLogout() 

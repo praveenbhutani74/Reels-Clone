@@ -65,9 +65,10 @@ function index() {
               name:name,
               email:email,
               uid:user.user.uid,
+              posts:[],
               photoUrl:downloadURL
             }
-            setDoc(doc(db,"users",user.user.uid),obj);
+              setDoc(doc(db,"users",user.user.uid),obj);
 
 
           });
