@@ -60,10 +60,10 @@ function Index() {
                     >
 
 
-                        <Image src={image1}></Image>
-                        <Image src={image2}></Image>
-                        <Image src={image3}></Image>
-                        <Image src={image4}></Image>
+                        <Image src={image1} alt='image1'></Image>
+                        <Image src={image2} alt='image2'></Image>
+                        <Image src={image3} alt='image3'></Image>
+                        <Image src={image4} alt='image4'></Image>
 
 
                     </Carousel>
@@ -74,7 +74,7 @@ function Index() {
             <div className='ForgotPassword' >
                 <div className="ForgotPassword-upper">
 
-                    <Image src={insta} style={{ marginTop: "1rem" }} />
+                    <Image src={insta} style={{ marginTop: "1rem" }} alt='ImageInsta' />
 
                     <TextField size='small' margin='dense' id="outlined-basic" label="Email" variant="outlined" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} />
                     {/* <TextField size='small' id="outlined-basic" label="Password" type="password" variant="outlined" fullWidth margin='dense'  value={password} onChange={(e)=>setPassword(e.target.value)} style={{ marginTop: "1rem" }}  /> */}
