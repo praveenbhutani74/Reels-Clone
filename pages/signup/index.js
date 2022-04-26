@@ -13,7 +13,7 @@ import { db, storage } from '../../firebase';
 import { doc, setDoc } from 'firebase/firestore';
 // import { async } from '@firebase/util';
 
-function index() {
+function Index() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,16 +26,13 @@ function index() {
 
 
   const ClickOnsignUp = async () => {
-    console.log(name);
-    console.log(email);
-    console.log(file);
+
 
     try {
       setLoading(true);
       setError('');
       const user = await signup(email, password);
-      console.log(user.user.uid);
-      console.log('signed up');
+
       const storageRef = ref(storage, `${user.user.uid}/Profile`);
 
       const uploadTask = uploadBytesResumable(storageRef, file);
@@ -49,26 +46,28 @@ function index() {
           // Observe state change events such as progress, pause, and resume
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log('Upload is ' + progress + '% done');
+
 
         },
         (error) => {
           // Handle unsuccessful uploads
-          console.log(Error);
+
+          setError(err.message);
+          return;
         },
         () => {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log('File available at', downloadURL);
-            let obj={
-              name:name,
-              email:email,
-              uid:user.user.uid,
-              posts:[],
-              photoUrl:downloadURL
+          getDownloadURL(uploadTask.snapshot.ref).then(async(downloadURL) => {
+
+            let obj = {
+              name: name,
+              email: email,
+              uid: user.user.uid,
+              posts: [],
+              photoUrl: downloadURL
             }
-              setDoc(doc(db,"users",user.user.uid),obj);
+            await setDoc(doc(db, "users", user.user.uid), obj);
 
 
           });
@@ -77,7 +76,7 @@ function index() {
 
 
     } catch (err) {
-      console.log(err.message);
+
       setError(err.message);
       setTimeout(() => {
         setError('');
@@ -138,4 +137,4 @@ function index() {
 
   )
 }
-export default index;
+export default Index;

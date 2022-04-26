@@ -17,7 +17,7 @@ const Feeds = () => {
   const[posts,setPosts]=useState([]);
   useEffect(()=>{
     const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
-      // console.log("Current data: ", doc.data());
+      
       setData(doc.data());
   });
 
@@ -34,7 +34,7 @@ const Feeds = () => {
             tempArray.push(doc.data())
         })
         setPosts([...tempArray])
-        console.log(tempArray)
+       
     })
     return () => {
         unsub();

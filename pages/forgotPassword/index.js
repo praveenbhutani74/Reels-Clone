@@ -1,4 +1,4 @@
-import React,{useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -14,36 +14,36 @@ import { AuthContext } from '../../context/auth';
 import { useRouter } from 'next/router';
 import Link from 'next/link'
 
-function index() {
-    const router=useRouter();
-    const [email,setEmail]=useState('');
-   
-    const [error,setError]=useState('');
-    const [loading,setLoading]=useState(false);
+function Index() {
+    const router = useRouter();
+    const [email, setEmail] = useState('');
 
-    const{forgot,user}=useContext(AuthContext);
-    console.log(user);
-    
-    const ForgotPasswordClickBtn=async()=>{
-        try{
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const { forgot, user } = useContext(AuthContext);
+
+
+    const ForgotPasswordClickBtn = async () => {
+        try {
             setLoading(true);
             setError('');
             await forgot(email);
 
-        }catch(err){
+        } catch (err) {
             setError(err.message);
-            setTimeout(()=>{
+            setTimeout(() => {
                 setError('');
-            },2000)
+            }, 2000)
         }
         setLoading(false);
     }
 
-    useEffect(()=>{
-        if(user){
+    useEffect(() => {
+        if (user) {
             router.push('/');
         }
-    },[user]);
+    }, [user]);
 
     return (
         <div className="ForgotPassword-main">
@@ -76,21 +76,21 @@ function index() {
 
                     <Image src={insta} style={{ marginTop: "1rem" }} />
 
-                    <TextField size='small' margin='dense' id="outlined-basic" label="Email" variant="outlined" fullWidth  value={email} onChange={(e)=>setEmail(e.target.value)} />
+                    <TextField size='small' margin='dense' id="outlined-basic" label="Email" variant="outlined" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} />
                     {/* <TextField size='small' id="outlined-basic" label="Password" type="password" variant="outlined" fullWidth margin='dense'  value={password} onChange={(e)=>setPassword(e.target.value)} style={{ marginTop: "1rem" }}  /> */}
 
                     {
-                        error!=''&&
-                        <div style={{color:'red'}}>
+                        error != '' &&
+                        <div style={{ color: 'red' }}>
                             {error}
                         </div>
                     }
 
                     <Button variant="contained" fullWidth color="primary" component="span" style={{ marginTop: "1rem" }}
-                    onClick={ForgotPasswordClickBtn} disabled={loading}
+                        onClick={ForgotPasswordClickBtn} disabled={loading}
                     >
 
-                      Send Email
+                        Send Email
                     </Button>
                     {/* <Typography style={{ color: "blue", marginTop: "1rem" }}>
                         Forgot password?
@@ -100,7 +100,7 @@ function index() {
 
 
                 <div className="ForgotPassword-bottom">
-                    Dont Have an account?<Link href="/login"><span style={{ color: 'blue',cursor:'pointer' }} > Log In</span></Link>
+                    Dont Have an account?<Link href="/login"><span style={{ color: 'blue', cursor: 'pointer' }} > Log In</span></Link>
                 </div>
             </div>
         </div>
@@ -108,4 +108,4 @@ function index() {
 
     )
 }
-export default index;   
+export default Index;   

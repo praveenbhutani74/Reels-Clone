@@ -9,8 +9,8 @@ import { arrayUnion, doc, serverTimestamp, setDoc, updateDoc } from 'firebase/fi
 
 import { db, storage } from '../firebase';
 
-function VideoFeed({ Data }) {
-    console.log(Data);
+ function VideoFeed({ Data }) {
+  
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -25,7 +25,7 @@ function VideoFeed({ Data }) {
             },2000)
             return;
         }
-        if((file.size/(1024*1024))>200){
+        if((file.size/(1024*1024))>100){
             setError("Size exceeds!! Size more than 40Mb");
             setTimeout(()=>{
                 setError('');
@@ -49,10 +49,12 @@ function VideoFeed({ Data }) {
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             setProgress(progress);
-            console.log('Upload is ' + progress + '% done');
+          
   
           },
           (error) => {
+            setLoading(false);
+            setProgress(0);
             setError(error.message);
             setTimeout(()=>{
                 setError('');
@@ -62,8 +64,8 @@ function VideoFeed({ Data }) {
           () => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
-            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              console.log('File available at', downloadURL);
+            getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
+             
               let obj={
                likes:[],
                postId:uid,
@@ -73,10 +75,10 @@ function VideoFeed({ Data }) {
                uid:Data.uid,
                timestamp:serverTimestamp()
               }
-            //   console.log(obj);
-              setDoc(doc(db,"posts",uid),obj);
             
-               updateDoc(doc(db,"users",Data.uid),{
+              await setDoc(doc(db,"posts",uid),obj);
+            
+             await updateDoc(doc(db,"users",Data.uid),{
                     posts:arrayUnion(uid)
               })
 

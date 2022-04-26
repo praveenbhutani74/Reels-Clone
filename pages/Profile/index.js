@@ -4,24 +4,20 @@ import { AuthContext } from '../../context/auth';
 import { useRouter } from 'next/router';
 import Navbar from '../../compnents/Navbar';
 
-function index() {
+function Index() {
 
-    const {user}=  useContext(AuthContext);
-    console.log(user);
-    function Redirect() {
-        const router = useRouter();
-        router.push("/login");
-        return null
-      }
-    
+
+
+
   return (
     <div>
 
-        <ProfileComp/>
+<ProfileComp/>
+      
 
 
     </div>
   )
 }
 
-export default index
+export default Index

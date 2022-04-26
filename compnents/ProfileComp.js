@@ -14,9 +14,9 @@ function ProfileComp() {
   useEffect(()=>{
     if(user){
     const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
-      // console.log("Current data: ", doc.data());
+     
       setData(doc.data());
-      setPostId(doc.data().posts);
+      setPostId(doc.data()?.posts);
   });
 
 
@@ -33,13 +33,15 @@ function ProfileComp() {
   useEffect(()=>{
 
     let temparray=[];
-    postid.map((postid,idx)=>{
+    if(postid){
+    postid.map(async(postid,idx)=>{
 
      onSnapshot(doc(db,"posts",postid),(doc)=>{
         temparray.push(doc.data());
         setPosts([...temparray]);
       })
     })
+  }
   },[postid])
   
   const handleClick = (e) => {
@@ -71,7 +73,7 @@ function ProfileComp() {
         <div className='Video-posts'>
          {
                         posts.map((post,idx)=>(
-                          <video  src={post?.postURL}   muted  onClick={handleClick} />
+                          <video src={post?.postURL}   muted  onClick={handleClick} />
                         ))
                     } 
            

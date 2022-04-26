@@ -1,4 +1,4 @@
-import React,{useContext, useEffect, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -14,36 +14,36 @@ import { AuthContext } from '../../context/auth';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
-function index() {
-    const router=useRouter();
-    const [email,setEmail]=useState('');
-    const [password,setPassword]=useState('');
-    const [error,setError]=useState('');
-    const [loading,setLoading]=useState(false);
+function Index() {
+    const router = useRouter();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const{login,user}=useContext(AuthContext);
-    console.log(user);
-    
-    const LoginClickBtn=async()=>{
-        try{
+    const { login, user } = useContext(AuthContext);
+
+
+    const LoginClickBtn = async () => {
+        try {
             setLoading(true);
             setError('');
-            await login(email,password);
+            await login(email, password);
 
-        }catch(err){
+        } catch (err) {
             setError(err.message);
-            setTimeout(()=>{
+            setTimeout(() => {
                 setError('');
-            },2000)
+            }, 2000)
         }
         setLoading(false);
     }
 
-    useEffect(()=>{
-        if(user){
+    useEffect(() => {
+        if (user) {
             router.push('/');
         }
-    },[user]);
+    }, [user]);
 
     return (
         <div className="login-main">
@@ -55,7 +55,7 @@ function index() {
                         autoPlay={true}
                         showStatus={false}
                         showIndicators={false}
-                        // showThumbs={false}
+                    // showThumbs={false}
 
                     >
 
@@ -76,23 +76,23 @@ function index() {
 
                     <Image src={insta} style={{ marginTop: "1rem" }} />
 
-                    <TextField size='small' margin='dense' id="outlined-basic" label="Email" variant="outlined" fullWidth  value={email} onChange={(e)=>setEmail(e.target.value)} />
-                    <TextField size='small' id="outlined-basic" label="Password" type="password" variant="outlined" fullWidth margin='dense'  value={password} onChange={(e)=>setPassword(e.target.value)} style={{ marginTop: "1rem" }}  />
+                    <TextField size='small' margin='dense' id="outlined-basic" label="Email" variant="outlined" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} />
+                    <TextField size='small' id="outlined-basic" label="Password" type="password" variant="outlined" fullWidth margin='dense' value={password} onChange={(e) => setPassword(e.target.value)} style={{ marginTop: "1rem" }} />
 
                     {
-                        error!=''&&
-                        <div style={{color:'red'}}>
+                        error != '' &&
+                        <div style={{ color: 'red' }}>
                             {error}
                         </div>
                     }
 
                     <Button variant="contained" fullWidth color="primary" component="span" style={{ marginTop: "1rem" }}
-                    onClick={LoginClickBtn} disabled={loading}
+                        onClick={LoginClickBtn} disabled={loading}
                     >
 
                         Log In
                     </Button>
-                    <Link href="/forgotPassword"><Typography style={{ color: "blue", marginTop: "1rem",cursor:'pointer' }}>
+                    <Link href="/forgotPassword"><Typography style={{ color: "blue", marginTop: "1rem", cursor: 'pointer' }}>
                         Forgot password?
                     </Typography></Link>
 
@@ -100,7 +100,7 @@ function index() {
 
 
                 <div className="login-bottom">
-                    Dont Have an account?<Link href="/signup"><span style={{ color: 'blue',cursor:'pointer' }} > Sign up</span></Link>
+                    Dont Have an account?<Link href="/signup"><span style={{ color: 'blue', cursor: 'pointer' }} > Sign up</span></Link>
                 </div>
             </div>
         </div>
@@ -108,4 +108,4 @@ function index() {
 
     )
 }
-export default index;
+export default Index;
