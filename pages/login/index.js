@@ -29,6 +29,7 @@ function Index() {
             setLoading(true);
             setError('');
             await login(email, password);
+            // router.push('/')
 
         } catch (err) {
             setError(err.message);
@@ -38,12 +39,16 @@ function Index() {
         }
         setLoading(false);
     }
-
     useEffect(() => {
+
         if (user) {
-            router.push('/');
+          router.push('/');
         }
-    }, [user]);
+    
+    
+      }, [user])
+
+
 
     return (
         <div className="login-main">
@@ -60,10 +65,10 @@ function Index() {
                     >
 
 
-                        <Image src={image1}></Image>
-                        <Image src={image2}></Image>
-                        <Image src={image3}></Image>
-                        <Image src={image4}></Image>
+                        <Image src={image1} alt='Image1'></Image>
+                        <Image src={image2} alt='Image1'></Image>
+                        <Image src={image3} alt='Image1' ></Image>
+                        <Image src={image4} alt='Image1'></Image>
 
 
                     </Carousel>
@@ -74,7 +79,7 @@ function Index() {
             <div className='login' >
                 <div className="login-upper">
 
-                    <Image src={insta} style={{ marginTop: "1rem" }} />
+                    <Image src={insta} style={{ marginTop: "1rem" }} alt='Insta' />
 
                     <TextField size='small' margin='dense' id="outlined-basic" label="Email" variant="outlined" fullWidth value={email} onChange={(e) => setEmail(e.target.value)} />
                     <TextField size='small' id="outlined-basic" label="Password" type="password" variant="outlined" fullWidth margin='dense' value={password} onChange={(e) => setPassword(e.target.value)} style={{ marginTop: "1rem" }} />
@@ -92,7 +97,7 @@ function Index() {
 
                         Log In
                     </Button>
-                    <Link href="/forgotPassword"><Typography style={{ color: "blue", marginTop: "1rem", cursor: 'pointer' }}>
+                    <Link href="/forgotPassword" passHref ><Typography style={{ color: "blue", marginTop: "1rem", cursor: 'pointer' }}>
                         Forgot password?
                     </Typography></Link>
 
@@ -100,7 +105,7 @@ function Index() {
 
 
                 <div className="login-bottom">
-                    Dont Have an account?<Link href="/signup"><span style={{ color: 'blue', cursor: 'pointer' }} > Sign up</span></Link>
+                    Dont Have an account?<Link href="/signup" passHref><span style={{ color: 'blue', cursor: 'pointer' }} > Sign up</span></Link>
                 </div>
             </div>
         </div>

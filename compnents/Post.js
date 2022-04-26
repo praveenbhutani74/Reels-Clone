@@ -63,12 +63,9 @@ function Post({ postData, Data }) {
   return (
 
     <div className='post' style={{ display: "flex" }}>
-      {/* <ReactPlayer url={postData.postURL} /> */}
+     
 
-      <video ref={videoRef} src={postData.postURL} muted
-
-        onClick={handleClick}
-        onEnded={handleScroll} />
+      <video ref={videoRef} src={postData.postURL} muted onClick={handleClick}  onEnded={handleScroll} />
 
       <div className='videoFeed-information' style={{ display: "flex", justifyContent: "space-evenly" }}>
         <div className='Avatar-Name' >
