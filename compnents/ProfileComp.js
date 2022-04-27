@@ -6,81 +6,82 @@ import { db } from '../firebase';
 import Navbar from './Navbar';
 function ProfileComp() {
 
-  const {user}=useContext(AuthContext);
-  const [Data,setData]=useState({});
-  
-  const[postid,setPostId]=useState([]);
-  const[posts,setPosts]=useState([]);
-  useEffect(()=>{
-    if(user){
-    const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
-     
-      setData(doc.data());
-      setPostId(doc.data()?.posts);
-  });
+  const { user } = useContext(AuthContext);
+  const [Data, setData] = useState({});
+
+  const [postid, setPostId] = useState([]);
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    if (user) {
+      const unsub = onSnapshot(doc(db, "users", user.uid), (doc) => {
+
+        setData(doc.data());
+        setPostId(doc.data()?.posts);
+      });
 
 
-  return ()=>{
-    unsub();
-  }
-}
+      return () => {
+        unsub();
+      }
+    }
 
-  },[user])  
+  }, [user])
 
 
- 
 
-  useEffect(()=>{
 
-    let temparray=[];
-    if(postid){
-    postid.map(async(postid,idx)=>{
+  useEffect(() => {
 
-     onSnapshot(doc(db,"posts",postid),(doc)=>{
-        temparray.push(doc.data());
-        setPosts([...temparray]);
+    let temparray = [];
+    if (postid) {
+      postid.map(async (postid, idx) => {
+
+        onSnapshot(doc(db, "posts", postid), (doc) => {
+          temparray.push(doc.data());
+          setPosts([...temparray]);
+        })
       })
-    })
-  }
-  },[postid])
-  
+    }
+  }, [postid])
+
   const handleClick = (e) => {
     e.preventDefault();
     e.target.muted = !e.target.muted;
-}
+  }
 
 
 
   return (
     <>
-    <Navbar Data={Data} />
+      <Navbar Data={Data} />
 
-    <div className='max-width'>
+      <div className='max-width'>
         <div className='profile-upper'>
 
-            <img src={Data?.photoUrl}
-            // className='Profile-Image'
-           style={{height:"10rem",width:"10rem",
-           borderRadius:"50%"
-           }} ></img>
-           <div className='Profile-info'>
-               <h2 >{Data?.name}</h2>
-               <h3 >Posts : {Data?.posts?.length}</h3>
-           </div>
+          <img src={Data?.photoUrl}
+         
+            style={{
+              height: "10rem", width: "10rem",
+              borderRadius: "50%"
+            }} ></img>
+          <div className='Profile-info'>
+            <h2 >{Data?.name}</h2>
+            <h3 >Posts : {Data?.posts?.length}</h3>
+          </div>
 
         </div>
-        <hr/>
+        <hr />
         <div className='Video-posts'>
-         {
-                        posts.map((post,idx)=>(
-                          <video src={post?.postURL}   muted  onClick={handleClick} />
-                        ))
-                    } 
-           
-        </div>
-    </div>
+          {
+            posts.map((post, idx) => (
+              <video src={post?.postURL} muted onClick={handleClick} />
+            ))
+          }
 
-    
+        </div>
+      </div>
+
+
     </>
   )
 }
