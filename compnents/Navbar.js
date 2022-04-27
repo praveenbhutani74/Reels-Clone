@@ -102,7 +102,7 @@ const ResponsiveAppBar = ({ Data }) => {
               onClose={handleCloseUserMenu}
             >
               <MenuItem onClick={handleCloseUserMenu}>
-                <Link href='/profile' style={{ textDecoration: 'none', color: "black" }}>
+                <Link href='/Profile' style={{ textDecoration: 'none', color: "black" }} passhref>
                   <Typography textAlign="center">Profile</Typography>
                 </Link>
               </MenuItem>

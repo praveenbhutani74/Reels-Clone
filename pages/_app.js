@@ -3,7 +3,7 @@ import './signup/signup.css'
 import './login/login.css'
 import '../compnents/Feeds.css'
 import './forgotPassword/forgotPassword.css'
-import './profile/ProfileComp.css'
+import './Profile/ProfileComp.css'
 
 
 import "react-responsive-carousel/lib/styles/carousel.min.css";
